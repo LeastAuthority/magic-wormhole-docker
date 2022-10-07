@@ -45,7 +45,7 @@ Update the GitHub Action `.github/workflows/docker-image.yml` with the desired v
 ...
 ----
 
-== Example
+== Manual build example
 
 To manually build for a tag like reference, e. g. `0.4.1-11-gac91c3a`.
 
