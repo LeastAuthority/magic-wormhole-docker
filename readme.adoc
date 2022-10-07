@@ -1,0 +1,52 @@
+= magic-wormhole docker images
+
+Create docker images of magic-wormhole backend services:
+
+* link:https://github.com/magic-wormhole/magic-wormhole-mailbox-server[Magic Wormhole Mailbox Server]
+* link:https://github.com/magic-wormhole/magic-wormhole-mailbox-server[Magic Wormhole Transit Relay]
+
+== Basic instructions
+
+In order to have an exact reference to the version use
+
+[source]
+----
+git describe --tags
+----
+
+on the original repos above to receive a tag like reference, e. g. `0.4.1-11-gac91c3a`.
+
+=== Build Mailbox Service
+
+[source]
+----
+cd mailbox
+----
+
+==== Build docker image
+
+[source]
+----
+docker build . -t leastauthority/magic-wormhole-mailbox:0.4.1-11-gac91c3a
+----
+
+==== Push image
+
+With version tag
+
+[source]
+----
+docker push leastauthority/magic-wormhole-mailbox:0.4.1-11-gac91c3a
+----
+
+and latest version
+
+[source]
+----
+docker tag leastauthority/magic-wormhole-mailbox:0.4.1-11-gac91c3a leastauthority/magic-wormhole-mailbox:latest
+docker push leastauthority/magic-wormhole-mailbox:latest
+----
+
+=== Build Relay Service
+
+relay service instructions are similar ...
