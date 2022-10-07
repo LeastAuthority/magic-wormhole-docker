@@ -8,7 +8,8 @@ RUN apt install rustc -y
 
 WORKDIR /app
 
-RUN pip install git+https://github.com/magic-wormhole/magic-wormhole-mailbox-server.git@0.4.1-11-gac91c3a#egg=magic-wormhole-mailbox-server
+ARG VERSION_TAG
+RUN pip install git+https://github.com/magic-wormhole/magic-wormhole-mailbox-server.git@${VERSION_TAG}#egg=magic-wormhole-mailbox-server
 
 # Copy welcome message as file to load with newlines symbols in parameters
 COPY welcome.motd welcome.motd
