@@ -1,20 +1,53 @@
-= magic-wormhole docker images
+= magic-wormhole Docker images
 
-Create docker images of magic-wormhole backend services:
+Create Docker images of magic-wormhole backend services:
 
-* link:https://github.com/magic-wormhole/magic-wormhole-mailbox-server[Magic Wormhole Mailbox Server]
-* link:https://github.com/magic-wormhole/magic-wormhole-mailbox-server[Magic Wormhole Transit Relay]
+* link:https://github.com/magic-wormhole/magic-wormhole-mailbox-server[Magic Wormhole Mailbox Server] -> https://hub.docker.com/r/leastauthority/magic-wormhole-mailbox
+* link:https://github.com/magic-wormhole/magic-wormhole-mailbox-server[Magic Wormhole Transit Relay] -> https://hub.docker.com/r/leastauthority/magic-wormhole-relay
+
 
 == Basic instructions
 
-In order to have an exact reference to the version use
+In order to have an exact reference to the version to use
 
-[source]
+
+|===
+|Variant |Command
+
+|latest tag reachable from current commit
+a|[source]
 ----
 git describe --tags
 ----
 
-on the original repos above to receive a tag like reference, e. g. `0.4.1-11-gac91c3a`.
+|Short git hash of the current commit
+a|[source]
+----
+git rev-parse --short HEAD
+----
+|===
+
+Update the GitHub Action `.github/workflows/docker-image.yml` with the desired version reference:
+
+[source]
+----
+...
+    strategy:
+      matrix:
+        target:
+          - directory: mailbox
+            image: leastauthority/magic-wormhole-mailbox
+            version: <version reference>
+          - directory: relay
+            image: leastauthority/magic-wormhole-relay
+            version: <version reference>
+    steps:
+...
+----
+
+== Example
+
+To manually build for a tag like reference, e. g. `0.4.1-11-gac91c3a`.
 
 === Build Mailbox Service
 
@@ -23,11 +56,11 @@ on the original repos above to receive a tag like reference, e. g. `0.4.1-11-gac
 cd mailbox
 ----
 
-==== Build docker image
+==== Build Docker image
 
 [source]
 ----
-docker build . -t leastauthority/magic-wormhole-mailbox:0.4.1-11-gac91c3a
+docker build . -t leastauthority/magic-wormhole-mailbox:0.4.1-11-gac91c3a --build-arg VERSION_TAG=0.4.1-11-gac91c3a
 ----
 
 ==== Push image

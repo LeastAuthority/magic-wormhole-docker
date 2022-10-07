@@ -1,0 +1,41 @@
+name: Magic Wormhole Mailbox Server Image
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          - directory: mailbox
+            image: leastauthority/magic-wormhole-mailbox
+            version: ac91c3a
+          - directory: relay
+            image: leastauthority/magic-wormhole-relay
+            version: db48e91
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      working-directory: ./${{ matrix.target.directory }}
+      run: docker build . --file Dockerfile --tag ${{ matrix.target.image }}:${{ matrix.target.version}} --build-arg VERSION_TAG=${{ matrix.target.version }}
+    - name: List images
+      run: docker images
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+      if: github.ref == 'refs/heads/main'
+    - name: Push to docker hub
+      run: docker push ${{ matrix.target.image }}:${{ matrix.target.version}}
+      if: github.ref == 'refs/heads/main'
+    - name: Push to docker hub latest
+      run: |
+        docker tag ${{ matrix.target.image }}:${{ matrix.target.version}} ${{ matrix.target.image }}:latest
+        docker push ${{ matrix.target.image }}:latest
+      if: github.ref == 'refs/heads/main'
