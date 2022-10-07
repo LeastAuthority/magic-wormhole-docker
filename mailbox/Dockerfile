@@ -14,4 +14,5 @@ RUN pip install git+https://github.com/magic-wormhole/magic-wormhole-mailbox-ser
 # Copy welcome message as file to load with newlines symbols in parameters
 COPY welcome.motd welcome.motd
 
+# --blur-usage=3600 Logging time rounded to 1 hour and turns off request-logging
 CMD twist wormhole-mailbox --blur-usage=3600 --motd "$(cat welcome.motd)"
