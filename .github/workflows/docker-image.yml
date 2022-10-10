@@ -3,6 +3,7 @@ name: Magic Wormhole Mailbox Server Image
 on:
   push:
     branches: [ "main" ]
+    tags: [ "*" ]
   pull_request:
     branches: [ "main" ]
 
