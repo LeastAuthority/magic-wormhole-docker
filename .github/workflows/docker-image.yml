@@ -20,9 +20,17 @@ jobs:
             version: db48e91
     steps:
     - uses: actions/checkout@v3
+    - name: Determine target tag
+      id: target
+      run: |
+        if [ ${{ github.ref_type }} == 'branch' ]; then
+        echo "::set-output name=target_tag::$(git rev-parse --short HEAD)"
+        else
+        echo "::set-output name=target_tag::$(git describe --always)"
+        fi
     - name: Build the Docker image
       working-directory: ./${{ matrix.target.directory }}
-      run: docker build . --file Dockerfile --tag ${{ matrix.target.image }}:${{ matrix.target.version}} --build-arg VERSION_TAG=${{ matrix.target.version }}
+      run: docker build . --file Dockerfile --tag ${{ matrix.target.image }}:${{ steps.target.outputs.target_tag }} --build-arg VERSION_TAG=${{ matrix.target.version }}
     - name: List images
       run: docker images
     - name: Login to Docker Hub
@@ -32,10 +40,10 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
       if: github.ref == 'refs/heads/main'
     - name: Push to docker hub
-      run: docker push ${{ matrix.target.image }}:${{ matrix.target.version}}
+      run: docker push ${{ matrix.target.image }}:${{ steps.target.outputs.target_tag }}
       if: github.ref == 'refs/heads/main'
     - name: Push to docker hub latest
       run: |
-        docker tag ${{ matrix.target.image }}:${{ matrix.target.version}} ${{ matrix.target.image }}:latest
+        docker tag ${{ matrix.target.image }}:${{ steps.target.outputs.target_tag }} ${{ matrix.target.image }}:latest
         docker push ${{ matrix.target.image }}:latest
       if: github.ref == 'refs/heads/main'
