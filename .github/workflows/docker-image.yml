@@ -24,6 +24,7 @@ jobs:
     - name: Determine target tag
       id: target
       run: |
+        echo "github.ref: ${{ github.ref }}"
         if [ ${{ github.ref_type }} == 'branch' ]; then
         echo "::set-output name=target_tag::$(git rev-parse --short HEAD)"
         else
