@@ -27,7 +27,7 @@ jobs:
         if [ ${{ github.ref_type }} == 'branch' ]; then
         echo "::set-output name=target_tag::$(git rev-parse --short HEAD)"
         else
-        echo "::set-output name=target_tag::$(git describe --always)"
+        echo "::set-output name=target_tag::$(git describe --tags --always)"
         fi
     - name: Build the Docker image
       working-directory: ./${{ matrix.target.directory }}
