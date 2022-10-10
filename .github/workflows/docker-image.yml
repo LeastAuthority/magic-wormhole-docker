@@ -1,3 +1,4 @@
+---
 name: Magic Wormhole Mailbox Server Image
 
 on:
@@ -40,12 +41,12 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-      if: github.ref == 'refs/heads/main' || github.ref_type == "tag"
+      if: github.ref == 'refs/heads/main' || github.ref_type == 'tag'
     - name: Push to docker hub
       run: docker push ${{ matrix.target.image }}:${{ steps.target.outputs.target_tag }}
-      if: github.ref == 'refs/heads/main' || github.ref_type == "tag"
+      if: github.ref == 'refs/heads/main' || github.ref_type == 'tag'
     - name: Push to docker hub latest
       run: |
         docker tag ${{ matrix.target.image }}:${{ steps.target.outputs.target_tag }} ${{ matrix.target.image }}:latest
         docker push ${{ matrix.target.image }}:latest
-      if: github.ref == 'refs/heads/main' || github.ref_type == "tag"
+      if: github.ref == 'refs/heads/main' || github.ref_type == 'tag'
