@@ -1,4 +1,4 @@
-FROM pypy:3.9-bullseye
+FROM pypy:3.9-7.3.9-bullseye
 
 COPY Pipfile /app/Pipfile
 COPY Pipfile.lock /app/Pipfile.lock
