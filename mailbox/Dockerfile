@@ -17,4 +17,4 @@ RUN pip install git+https://github.com/magic-wormhole/magic-wormhole-mailbox-ser
 COPY welcome.motd welcome.motd
 
 # --blur-usage=3600 Logging time rounded to 1 hour and turns off request-logging
-CMD twist wormhole-mailbox --channel-db=/db/relay.sqlite --blur-usage=3600 --motd "$(cat welcome.motd)"
+CMD twist wormhole-mailbox --channel-db=/db/relay.sqlite --usage-db=/db/usage-relay.sqlite --blur-usage=3600 --motd "$(cat welcome.motd)"
