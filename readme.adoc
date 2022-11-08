@@ -1,31 +1,22 @@
-= magic-wormhole Docker images
+= Magic Wormhole backend Docker images
 
-Create Docker images of magic-wormhole backend services:
+Building Docker images of Magic Wormhole backend services:
 
-* link:https://github.com/magic-wormhole/magic-wormhole-mailbox-server[Magic Wormhole Mailbox Server] -> https://hub.docker.com/r/leastauthority/magic-wormhole-mailbox
-* link:https://github.com/magic-wormhole/magic-wormhole-mailbox-server[Magic Wormhole Transit Relay] -> https://hub.docker.com/r/leastauthority/magic-wormhole-relay
+* Magic Wormhole Mailbox Server
+** Sources https://github.com/magic-wormhole/magic-wormhole-mailbox-server
+** Docker hub target: https://hub.docker.com/r/leastauthority/magic-wormhole-mailbox
+* Magic Wormhole Transit Relay
+** Sources https://github.com/magic-wormhole/magic-wormhole-mailbox-server
+** Docker hub target: https://hub.docker.com/r/leastauthority/magic-wormhole-relay
 
+These images are currently used in the magic-wormhole backend operated by https://github.com/LeastAuthority for use by the following products:
+
+* Winden https://winden.app/ (see https://github.com/LeastAuthority/winden)
+* Destiny (see https://github.com/LeastAuthority/destiny)
 
 == Basic instructions
 
-In order to have an exact reference to the version to use
-
-
-|===
-|Variant |Command
-
-|latest tag reachable from current commit
-a|[source]
-----
-git describe --tags
-----
-
-|Short git hash of the current commit
-a|[source]
-----
-git rev-parse --short HEAD
-----
-|===
+=== Select which source versions to use for the build
 
 Update the GitHub Action `.github/workflows/docker-image.yml` with the desired version reference:
 
@@ -44,6 +35,29 @@ Update the GitHub Action `.github/workflows/docker-image.yml` with the desired v
     steps:
 ...
 ----
+
+=== Docker tags used for build results
+In order to have an exact reference to the desired version we use
+
+|===
+|Variant |Command |Use case
+
+|latest tag reachable from current commit
+a|[source]
+----
+git describe --tags
+----
+|when building for tags on `main`
+
+|Short git hash of the current commit
+a|[source]
+----
+git rev-parse --short HEAD
+----
+|when building for non-tag commits on `main`
+|===
+
+Tags an commit hashes reference this repository.
 
 == Manual build example
 
