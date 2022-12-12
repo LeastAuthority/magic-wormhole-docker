@@ -1,6 +1,6 @@
-= Magic Wormhole backend Docker images
+= Magic Wormhole Docker images
 
-Building Docker images of Magic Wormhole backend services:
+Building Docker images of Magic Wormhole backend services and CLI:
 
 * Magic Wormhole Mailbox Server
 ** Sources https://github.com/magic-wormhole/magic-wormhole-mailbox-server
@@ -8,8 +8,11 @@ Building Docker images of Magic Wormhole backend services:
 * Magic Wormhole Transit Relay
 ** Sources https://github.com/magic-wormhole/magic-wormhole-mailbox-server
 ** Docker hub target: https://hub.docker.com/r/leastauthority/magic-wormhole-relay
+* Magic Wormhole Protocol implementation and CLI
+** Sources https://github.com/magic-wormhole/magic-wormhole
+** Docker hub target: https://hub.docker.com/r/leastauthority/magic-wormhole
 
-These images are currently used in the magic-wormhole backend operated by https://github.com/LeastAuthority for use by the following products:
+The 2 first images are currently used in the magic-wormhole backend operated by https://github.com/LeastAuthority for use by the following products:
 
 * Winden https://winden.app/ (see https://github.com/LeastAuthority/winden)
 * Destiny (see https://github.com/LeastAuthority/destiny)
@@ -32,7 +35,10 @@ Update the GitHub Action `.github/workflows/docker-image.yml` with the desired v
           - directory: relay
             image: leastauthority/magic-wormhole-relay
             version: <version reference>
-    steps:
+          - directory: wormhole
+            image: leastauthority/magic-wormhole
+            version: <version reference>
+     steps:
 ...
 ----
 
@@ -94,6 +100,6 @@ docker tag leastauthority/magic-wormhole-mailbox:0.4.1-11-gac91c3a leastauthorit
 docker push leastauthority/magic-wormhole-mailbox:latest
 ----
 
-=== Build Relay Service
+=== Build Relay Service or Implementation and CLI
 
-relay service instructions are similar ...
+Instructions are similar to the ones above ...
