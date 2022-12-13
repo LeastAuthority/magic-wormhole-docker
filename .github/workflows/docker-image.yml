@@ -20,6 +20,9 @@ jobs:
           - directory: relay
             image: leastauthority/magic-wormhole-relay
             version: db48e91
+          - directory: wormhole
+            image: leastauthority/magic-wormhole
+            version: 52ee3ce
     steps:
     - uses: actions/checkout@v3
     - name: Determine target tag
