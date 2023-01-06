@@ -17,12 +17,15 @@ jobs:
           - directory: mailbox
             image: leastauthority/magic-wormhole-mailbox
             version: ac91c3a
+            platforms: linux/arm64/v8,linux/amd64
           - directory: relay
             image: leastauthority/magic-wormhole-relay
             version: db48e91
+            platforms: linux/arm64/v8,linux/amd64
           - directory: wormhole
             image: leastauthority/magic-wormhole
             version: 52ee3ce
+            platforms: linux/arm64/v8,linux/amd64
     steps:
     - uses: actions/checkout@v3
     - name: Determine target tag
@@ -38,9 +41,9 @@ jobs:
         cat $GITHUB_ENV
     - name: Create Builder
       run: docker buildx create --name mwbuilder --bootstrap --use
-    - name: Build the Docker image
+    - name: Build the Docker image in cache
       working-directory: ./${{ matrix.target.directory }}
-      run: docker buildx build . --file Dockerfile --tag ${{ matrix.target.image }}:${{ env.target_tag }} --build-arg VERSION_TAG=${{ matrix.target.version }} --platform linux/arm64/v8,linux/amd64
+      run: docker buildx build . --file Dockerfile --tag ${{ matrix.target.image }}:${{ env.target_tag }} --build-arg VERSION_TAG=${{ matrix.target.version }} --platform ${{ matrix.target.platforms }}
     - name: List images
       run: docker images
     - name: Login to Docker Hub
@@ -49,11 +52,11 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
       if: github.ref == 'refs/heads/main' || github.ref_type == 'tag'
-    - name: Push to docker hub
-      run: docker push ${{ matrix.target.image }}:${{ env.target_tag }}
+    - name: Push to Docker Hub
+      working-directory: ./${{ matrix.target.directory }}
+      run: docker buildx build --push . --file Dockerfile --tag ${{ matrix.target.image }}:${{ env.target_tag }} --build-arg VERSION_TAG=${{ matrix.target.version }} --platform ${{ matrix.target.platforms }}
       if: github.ref == 'refs/heads/main' || github.ref_type == 'tag'
-    - name: Push to docker hub latest
-      run: |
-        docker tag ${{ matrix.target.image }}:${{ env.target_tag }} ${{ matrix.target.image }}:latest
-        docker push ${{ matrix.target.image }}:latest
+    - name: Push to Docker Hub latest
+      working-directory: ./${{ matrix.target.directory }}
+      run: docker buildx build --push . --file Dockerfile --tag ${{ matrix.target.image }}:latest --build-arg VERSION_TAG=${{ matrix.target.version }} --platform ${{ matrix.target.platforms }}
       if: github.ref == 'refs/heads/main' || github.ref_type == 'tag'
