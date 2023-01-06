@@ -40,7 +40,9 @@ jobs:
         fi
         cat $GITHUB_ENV
     - name: Create Builder
-      run: docker buildx create --name mwbuilder --bootstrap --use
+      run: | 
+        docker buildx create --name mwbuilder --bootstrap --use
+        docker buildx inspect mwbuilder
     - name: Build the Docker image in cache
       working-directory: ./${{ matrix.target.directory }}
       run: docker buildx build . --file Dockerfile --tag ${{ matrix.target.image }}:${{ env.target_tag }} --build-arg VERSION_TAG=${{ matrix.target.version }} --platform ${{ matrix.target.platforms }}
