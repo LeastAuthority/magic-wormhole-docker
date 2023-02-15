@@ -6,7 +6,7 @@ Building Docker images of Magic Wormhole backend services and CLI:
 ** Sources https://github.com/magic-wormhole/magic-wormhole-mailbox-server
 ** Docker hub target: https://hub.docker.com/r/leastauthority/magic-wormhole-mailbox
 * Magic Wormhole Transit Relay
-** Sources https://github.com/magic-wormhole/magic-wormhole-mailbox-server
+** Sources https://github.com/magic-wormhole/magic-wormhole-transit-relay
 ** Docker hub target: https://hub.docker.com/r/leastauthority/magic-wormhole-relay
 * Magic Wormhole Protocol implementation and CLI
 ** Sources https://github.com/magic-wormhole/magic-wormhole
