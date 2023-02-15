@@ -1,5 +1,5 @@
 ---
-name: Magic Wormhole Mailbox Server Image
+name: Magic Wormhole Images
 
 on:
   push:
@@ -16,13 +16,13 @@ jobs:
         target:
           - directory: mailbox
             image: leastauthority/magic-wormhole-mailbox
-            version: ac91c3a
+            version: 4b358859ba80de37c3dc0a5f67ec36909fd48234
           - directory: relay
             image: leastauthority/magic-wormhole-relay
-            version: db48e91
+            version: db48e915311d1d10c748bb5299e2345c74e90a1b
           - directory: wormhole
             image: leastauthority/magic-wormhole
-            version: 52ee3ce
+            version: 0.12.0
     steps:
     - uses: actions/checkout@v3
     - name: Determine target tag
