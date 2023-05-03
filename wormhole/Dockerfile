@@ -1,14 +1,22 @@
-FROM pypy:3.9-7.3.9-bullseye
+# Pull official base image from DockerHub
+FROM python:3.9.16-slim-bullseye
 
-COPY Pipfile /app/Pipfile
-COPY Pipfile.lock /app/Pipfile.lock
+# Avoid interactive frontend
+ENV DEBIAN_FRONTEND="noninteractive"
 
-RUN apt update
-RUN apt install rustc -y
+# Install some required packages for testing
+RUN INSTALL_PKGS="git" && \
+    apt-get -q clean && \
+    apt-get -q update && \
+    apt-get install -y $INSTALL_PKGS && \
+    apt-get -q clean
 
 WORKDIR /app
 
 ARG VERSION_TAG
-RUN pip install --upgrade git+https://github.com/magic-wormhole/magic-wormhole.git@${VERSION_TAG}#egg=magic-wormhole
+RUN pip install \
+    --disable-pip-version-check \
+    --no-cache \
+    --upgrade git+https://github.com/magic-wormhole/magic-wormhole.git@${VERSION_TAG}#egg=magic-wormhole
 
 CMD wormhole
