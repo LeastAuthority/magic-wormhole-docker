@@ -1,9 +1,6 @@
 # Pull official base image from DockerHub
 FROM python:3.9.16-slim-bullseye
 
-# Avoid interactive frontend
-ENV DEBIAN_FRONTEND="noninteractive"
-
 WORKDIR /app
 
 ARG VERSION_TAG
