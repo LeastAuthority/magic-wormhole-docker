@@ -1,5 +1,5 @@
 # Pull official base image from DockerHub
-FROM python:3.9.16-slim-bullseye
+FROM python:3.9.16-alpine3.17
 
 WORKDIR /app
 
