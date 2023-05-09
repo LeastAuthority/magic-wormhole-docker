@@ -1,14 +1,12 @@
-FROM pypy:3.9-7.3.9-bullseye
-
-COPY Pipfile /app/Pipfile
-COPY Pipfile.lock /app/Pipfile.lock
-
-RUN apt update
-RUN apt install rustc -y
+# Pull official base image from DockerHub
+FROM python:3.9.16-slim-bullseye
 
 WORKDIR /app
 
 ARG VERSION_TAG
-RUN pip install --upgrade git+https://github.com/magic-wormhole/magic-wormhole.git@${VERSION_TAG}#egg=magic-wormhole
+RUN pip install \
+    --disable-pip-version-check \
+    --no-cache \
+    --upgrade https://github.com/magic-wormhole/magic-wormhole/tarball/${VERSION_TAG}#egg=magic-wormhole
 
 CMD wormhole
