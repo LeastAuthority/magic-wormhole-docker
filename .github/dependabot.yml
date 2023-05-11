@@ -9,7 +9,7 @@ updates:
       interval: "daily"
       time: "12:00"
     reviewers:
-      - "LeastAuthority/it-ops"
+      - "LeastAuthority/magic-wormhole"
   - package-ecosystem: "docker"
     directory: "/relay"
     ignore:
@@ -19,7 +19,7 @@ updates:
       interval: "daily"
       time: "12:00"
     reviewers:
-      - "LeastAuthority/it-ops"
+      - "LeastAuthority/magic-wormhole"
   - package-ecosystem: "docker"
     directory: "/docker/mailbox"
     ignore:
@@ -29,4 +29,4 @@ updates:
       interval: "daily"
       time: "12:00"
     reviewers:
-      - "LeastAuthority/it-ops"
+      - "LeastAuthority/magic-wormhole"
