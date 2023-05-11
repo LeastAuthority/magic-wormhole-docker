@@ -6,8 +6,7 @@ RUN apt-get update && apt-get install -y \
 
 VOLUME /db
 
-COPY Pipfile /app/Pipfile
-COPY Pipfile.lock /app/Pipfile.lock
+COPY requirements.txt /app/
 
 WORKDIR /app
 
@@ -16,7 +15,7 @@ RUN pip install \
     --disable-pip-version-check \
     --no-cache \
     --upgrade \
-    https://github.com/magic-wormhole/magic-wormhole-mailbox-server/tarball/${VERSION_TAG}#egg=magic-wormhole-mailbox-server
+    -r requirements.txt
 
 # Copy welcome message as file to load with newlines symbols in parameters
 COPY welcome.motd welcome.motd
