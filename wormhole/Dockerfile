@@ -1,6 +1,8 @@
 # Pull official base image from DockerHub
 FROM python:3.9.16-slim-bullseye
 
+COPY requirements.txt /app/
+
 WORKDIR /app
 
 ARG VERSION_TAG
