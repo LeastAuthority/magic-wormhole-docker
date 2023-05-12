@@ -21,26 +21,28 @@ The 2 first images are currently used in the magic-wormhole backend operated by 
 
 === Select which source versions to use for the build
 
-Update the GitHub Action `.github/workflows/docker-image.yml` with the desired version reference:
+Update the `requirements.in` file in selected target folder and replace the Git hash used to determine the version:
 
 [source]
 ----
-...
-    strategy:
-      matrix:
-        target:
-          - directory: mailbox
-            image: leastauthority/magic-wormhole-mailbox
-            version: <version reference>
-          - directory: relay
-            image: leastauthority/magic-wormhole-relay
-            version: <version reference>
-          - directory: wormhole
-            image: leastauthority/magic-wormhole
-            version: <version reference>
-     steps:
-...
+magic-wormhole-mailbox-server -e git+https://github.com/magic-wormhole/magic-wormhole-mailbox-server/tarball/4b358859ba80de37c3dc0a5f67ec36909fd48234#egg=magic-wormhole-mailbox-server
 ----
+
+or just give the desired released version:
+
+[source]
+----
+magic-wormhole==0.12.0
+----
+
+Install `pip-tools` and run
+
+[source]
+----
+pip-compile requirements.in
+----
+
+to update the dependency versions in `requirements.txt`.
 
 === Docker tags used for build results
 In order to have an exact reference to the desired version we use

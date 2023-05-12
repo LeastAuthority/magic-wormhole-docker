@@ -6,8 +6,7 @@ RUN apt-get update && apt-get install -y \
 
 VOLUME /db
 
-COPY Pipfile /app/Pipfile
-COPY Pipfile.lock /app/Pipfile.lock
+COPY requirements.txt /app/
 
 WORKDIR /app
 
@@ -16,6 +15,6 @@ RUN pip install \
     --disable-pip-version-check \
     --no-cache \
     --upgrade \
-    https://github.com/magic-wormhole/magic-wormhole-transit-relay/tarball/${VERSION_TAG}#egg=magic-wormhole-transit-relay
+    -r requirements.txt
 
 CMD twist transitrelay --usage-db=/db/usage-transitrelay.sqlite --blur-usage 3600 --port=tcp:4001 --websocket=tcp:4002

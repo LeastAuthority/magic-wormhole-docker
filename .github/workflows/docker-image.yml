@@ -16,13 +16,10 @@ jobs:
         target:
           - directory: mailbox
             image: leastauthority/magic-wormhole-mailbox
-            version: 4b358859ba80de37c3dc0a5f67ec36909fd48234
           - directory: relay
             image: leastauthority/magic-wormhole-relay
-            version: db48e915311d1d10c748bb5299e2345c74e90a1b
           - directory: wormhole
             image: leastauthority/magic-wormhole
-            version: 0.12.0
     steps:
     - uses: actions/checkout@v3
     - name: Determine target tag
@@ -38,7 +35,7 @@ jobs:
         cat $GITHUB_ENV
     - name: Build the Docker image
       working-directory: ./${{ matrix.target.directory }}
-      run: docker build . --file Dockerfile --tag ${{ matrix.target.image }}:${{ env.target_tag }} --build-arg VERSION_TAG=${{ matrix.target.version }}
+      run: docker build . --file Dockerfile --tag ${{ matrix.target.image }}:${{ env.target_tag }}
     - name: List images
       run: docker images
     - name: Login to Docker Hub

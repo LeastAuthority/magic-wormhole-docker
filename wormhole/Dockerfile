@@ -7,6 +7,7 @@ ARG VERSION_TAG
 RUN pip install \
     --disable-pip-version-check \
     --no-cache \
-    --upgrade https://github.com/magic-wormhole/magic-wormhole/tarball/${VERSION_TAG}#egg=magic-wormhole
+    --upgrade \
+    -r requirements.txt
 
 CMD wormhole
