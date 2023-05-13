@@ -41,3 +41,17 @@ jobs:
 
     - name: List images
       run: docker images
+
+    - name: Extract requirements
+      run: |
+        docker run --rm -t --entrypoint python -v $(pwd)/helpers:/tmp/helpers \
+        magic-wormhole:0.12.0-python39-nix2111 /tmp/helpers/list-dependencies.py \
+        | grep -E "python3\.9" \
+        | sed -r -e 's/python3.9-//' -e 's/-([0-9])/==\1/' \
+        | sort \
+        > requirements.txt
+
+    - name: Scan images
+      uses: pypa/gh-action-pip-audit@v1.0.0
+      with:
+        inputs: requirements.txt
