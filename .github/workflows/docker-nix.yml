@@ -20,18 +20,18 @@ on:
       - '*/*.nix'
 
 jobs:
-  runs-on: ubuntu-latest
-  strategy:
-    matrix:
-      target:
-        - directory: mailbox
-          image: leastauthority/magic-wormhole-mailbox
-        - directory: relay
-          image: leastauthority/magic-wormhole-relay
-        - directory: wormhole
-          image: leastauthority/magic-wormhole
   build:
     name: Build images
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          - directory: mailbox
+            image: leastauthority/magic-wormhole-mailbox
+          - directory: relay
+            image: leastauthority/magic-wormhole-relay
+          - directory: wormhole
+            image: leastauthority/magic-wormhole
     steps:
     - name: Checkout
       uses: actions/checkout@v3
