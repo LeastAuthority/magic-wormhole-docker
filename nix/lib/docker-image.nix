@@ -5,11 +5,10 @@ let
     extraLibs = [ python3.pkgs.${pname} ];
     ignoreCollisions = true;
   };
-  # Parse package, Python and NixOS versions to tag the image
+  # Parse Python package and NixOS versions to tag the image
   pkgVersion = python3.pkgs.${pname}.version;
   libVersion = lib.lists.flatten (lib.lists.sublist 1 1 (builtins.split "([^.]+)\.([^.]+)\.([^.]+)\.([^.]+)" lib.version));
   nixVersion = builtins.concatStringsSep "." (lib.lists.take 3 libVersion);
-  nixRev = lib.lists.last libVersion;
 in
 # Build the image with our custom CMD
 dockerTools.buildLayeredImage {
