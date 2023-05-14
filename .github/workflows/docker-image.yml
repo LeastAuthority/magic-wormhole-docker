@@ -14,7 +14,7 @@ on:
     branches:    
       - main
     paths:
-      - '.github/workflows/docker-nix.yml'
+      - '.github/workflows/docker-image.yml'
       - '*/Dockerfile'
       - '*/Pipfile*'
       - 'mailbox/welcome.motd'
