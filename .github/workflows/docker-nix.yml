@@ -1,5 +1,5 @@
 ---
-name: Docker Nix Images
+name: Nix Build Images
 
 on:
   push:
@@ -31,8 +31,7 @@ jobs:
         - directory: wormhole
           image: leastauthority/magic-wormhole
   build:
-    name: Build Docker images with Nix
-    runs-on: ubuntu-latest
+    name: Build images
     steps:
     - name: Checkout
       uses: actions/checkout@v3
