@@ -20,7 +20,8 @@ dockerTools.buildLayeredImage {
     WorkingDir = "/app";
     Volumes = { "/db" = { }; };
     Cmd = [
-      "twist transitrelay"
+      "twist"
+      "transitrelay"
       "--usage-db=/db/usage-transitrelay.sqlite"
       "--blur-usage=3600"
       "--port=tcp:4001"

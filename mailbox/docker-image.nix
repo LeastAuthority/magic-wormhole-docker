@@ -20,7 +20,8 @@ dockerTools.buildLayeredImage {
     WorkingDir = "/app";
     Volumes = { "/db" = { }; };
     Cmd = [
-      "twist wormhole-mailbox"
+      "twist"
+      "wormhole-mailbox"
       "--usage-db=/db/usage-relay.sqlite"
       "--blur-usage=3600"
       "--channel-db=/db/relay.sqlite"
