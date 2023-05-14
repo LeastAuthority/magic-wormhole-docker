@@ -1,4 +1,3 @@
-
 ---
 name: Docker Nix Images
 
@@ -21,7 +20,17 @@ on:
       - '*/*.nix'
 
 jobs:
-  build-nix:
+  runs-on: ubuntu-latest
+  strategy:
+    matrix:
+      target:
+        - directory: mailbox
+          image: leastauthority/magic-wormhole-mailbox
+        - directory: relay
+          image: leastauthority/magic-wormhole-relay
+        - directory: wormhole
+          image: leastauthority/magic-wormhole
+  build:
     name: Build Docker images with Nix
     runs-on: ubuntu-latest
     steps:
@@ -33,26 +42,24 @@ jobs:
       with:
         nix_path: nixpkgs=channel:nixos-22.11
 
-    - name: Build the Docker images with nix
+    - name: Build image with Nix
       run: |
-        nix-build | while read IMG; do
-          docker load --input ${IMG}
-        done
+        docker load --input $(nix-build {{ matrix.target.directory }})
 
-    - name: List images
-      run: docker images
+    - name: List image
+      run: docker images "{{ matrix.target.image }}"
 
-    - name: Extract requirements
+    - name: Extract Python requirements
       run: |
-        docker run --rm -t --entrypoint python -v $(pwd)/helpers:/tmp/helpers \
-        magic-wormhole:0.12.0-python39-nix2111 /tmp/helpers/list-dependencies.py \
-        | grep -E "python3\.9" \
-        | sed -r -e 's/python3.9-//' -e 's/-([0-9])/==\1/' \
+        docker run --rm -t \
+        --entrypoint python \
+        -v $(pwd)/helpers:/helpers \
+        {{ matrix.target.image }} /helpers/requirements-from-nix.py \
         | grep -vE '==[0-9]+(\.[0-9]+){0,2}-dev' \
-        | sort \
         > requirements.txt
+        # The grep above avoids dupplicated requirements from dev!?
 
-    - name: Scan images
+    - name: Scan Python requirements
       uses: pypa/gh-action-pip-audit@v1.0.0
       with:
         inputs: requirements.txt
