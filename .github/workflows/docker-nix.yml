@@ -47,15 +47,15 @@ jobs:
       run: |
         docker load --input $(nix-build ${{ matrix.target.directory }})
 
-    - name: List image
-      run: docker images "${{ matrix.target.image }}"
+    - name: Get image tag
+      run: echo "tag=$(docker images "${{ matrix.target.image }}" --format "{{.Tag}}")" >> $GITHUB_ENV
 
     - name: Extract Python requirements
       run: |
         docker run --rm -t \
         --entrypoint python \
         -v $(pwd)/nix/helpers:/helpers \
-        ${{ matrix.target.image }} /helpers/requirements-from-nix.py \
+        ${{ matrix.target.image }}:${{ env.tag }} /helpers/requirements-from-nix.py \
         | grep -vE '==[0-9]+(\.[0-9]+){0,2}-dev' \
         > requirements.txt
         # The grep above avoids dupplicated requirements from dev!?
