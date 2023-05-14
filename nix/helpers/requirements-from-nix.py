@@ -17,4 +17,4 @@ for dir in os.listdir("/nix/store"):
         name = m.group(1)
         version = m.group(2)
         suffix = m.group(4) or ""
-        print('{}={}{}'.format(name, version, suffix))
+        print('{}=={}{}'.format(name, version, suffix))
