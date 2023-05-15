@@ -39,7 +39,7 @@ Install `pip-tools` and run
 
 [source]
 ----
-pip-compile --generate-hashes requirements.in
+pip-compile requirements.in
 ----
 
 to update the dependency versions in `requirements.txt`.
