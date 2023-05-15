@@ -7,7 +7,7 @@ import re
 p = re.compile('python[0-9]+\.[0-9]+-(.+)-([0-9]+(\.[0-9]+){0,2})(-.+)?')
 
 # Iterate through Nix store
-for dir in os.listdir("/nix/store"):
+for dir in os.listdir(os.getenv("NIX_STORE_DIR","/nix/store")):
     # Remove the fix hash part
     pkg = dir[33:]
     # Match Python modules
