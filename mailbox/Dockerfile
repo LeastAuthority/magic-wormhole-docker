@@ -1,7 +1,7 @@
 FROM pypy:3.9-7.3.9-slim-bullseye
 
 RUN apt-get update && apt-get install -y \
-    rustc \
+    git rustc \
     && rm -rf /var/lib/apt/lists/*
 
 VOLUME /db
