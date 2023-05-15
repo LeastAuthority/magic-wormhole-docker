@@ -1,1 +1,1 @@
-magic-wormhole-transit-relay -e git+https://github.com/magic-wormhole/magic-wormhole-transit-relay/tarball/4b358859ba80de37c3dc0a5f67ec36909fd48234#egg=magic-wormhole-transit-relay
+magic-wormhole-transit-relay @ git+https://github.com/magic-wormhole/magic-wormhole-transit-relay@db48e915311d1d10c748bb5299e2345c74e90a1b#egg=magic-wormhole-transit-relay

@@ -121,14 +121,13 @@ cryptography==40.0.2 \
     --hash=sha256:d5a1bd0e9e2031465761dfa920c16b0065ad77321d8a8c1f5ee331021fda65e9
     # via
     #   autobahn
+    #   magic-wormhole
     #   pyopenssl
     #   service-identity
     #   txtorcon
 hkdf==0.0.3 \
     --hash=sha256:622a31c634bc185581530a4b44ffb731ed208acf4614f9c795bdd70e77991dca
-    # via
-    #   magic-wormhole
-    #   spake2
+    # via spake2
 humanize==4.6.0 \
     --hash=sha256:401201aca462749773f02920139f302450cb548b70489b9b4b92be39fe3c3c50 \
     --hash=sha256:5f1f22bc65911eb1a6ffe7659bd6598e33dcfeeb904eb16ee1e705a09bf75916
@@ -151,7 +150,7 @@ incremental==22.10.0 \
     # via
     #   twisted
     #   txtorcon
-magic-wormhole==0.12.0 \
+magic-wormhole @ git+https://github.com/magic-wormhole/magic-wormhole@f66e759b2494d6713238d86eb0e8001f297ef553 \
     --hash=sha256:1b0fd8a334da978f3dd96b620fa9b9348cabedf26a87f74baac7a37052928160 \
     --hash=sha256:7c9a8d2a6e89314878dda23efc14c78398f1b6eb80e6c86c895c001c888d086e
     # via -r requirements.in

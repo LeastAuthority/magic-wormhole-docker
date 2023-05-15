@@ -1,1 +1,1 @@
-magic-wormhole-mailbox-server -e git+https://github.com/magic-wormhole/magic-wormhole-mailbox-server/tarball/4b358859ba80de37c3dc0a5f67ec36909fd48234#egg=magic-wormhole-mailbox-server
+magic-wormhole-mailbox-server @ git+https://github.com/magic-wormhole/magic-wormhole-mailbox-server@4b358859ba80de37c3dc0a5f67ec36909fd48234#egg=magic-wormhole-mailbox-server
