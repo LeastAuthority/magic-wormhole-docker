@@ -130,9 +130,7 @@ incremental==22.10.0 \
     --hash=sha256:912feeb5e0f7e0188e6f42241d2f450002e11bbc0937c65865045854c24c0bd0 \
     --hash=sha256:b864a1f30885ee72c5ac2835a761b8fe8aa9c28b9395cacf27286602688d3e51
     # via twisted
-magic-wormhole-mailbox-server @ git+https://github.com/magic-wormhole/magic-wormhole-mailbox-server@4b358859ba80de37c3dc0a5f67ec36909fd48234 \
-    --hash=sha256:1af10592909caaf519c00e706eac842c5e77f8d4356215fe9c61c7b2258a88fb \
-    --hash=sha256:1bf47755dba25dbfce99335f393b8a157515e098de6b5ed25324f679c3a5350e
+magic-wormhole-mailbox-server @ git+https://github.com/magic-wormhole/magic-wormhole-mailbox-server@4b358859ba80de37c3dc0a5f67ec36909fd48234
     # via -r requirements.in
 pyasn1==0.5.0 \
     --hash=sha256:87a2121042a1ac9358cabcaf1d07680ff97ee6404333bacca15f76aa8ad01a57 \
