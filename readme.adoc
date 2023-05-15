@@ -42,8 +42,6 @@ Install `pip-tools` and run
 pip-compile --generate-hashes requirements.in
 ----
 
-As of now we unfortunately can't include hashes when having a git-source included via `pip-compile --generate-hashes requirements.in`.
-
 === Docker tags used for build results
 In order to have an exact reference to the desired version we use
 
