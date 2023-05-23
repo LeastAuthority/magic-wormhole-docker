@@ -21,7 +21,7 @@ updates:
     reviewers:
       - "LeastAuthority/magic-wormhole"
   - package-ecosystem: "docker"
-    directory: "/docker/mailbox"
+    directory: "/wormhole"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
