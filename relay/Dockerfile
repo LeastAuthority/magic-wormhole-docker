@@ -18,3 +18,8 @@ RUN pip install \
     -r requirements.txt
 
 CMD twist transitrelay --usage-db=/db/usage-transitrelay.sqlite --blur-usage 3600 --port=tcp:4001 --websocket=tcp:4002
+
+LABEL org.opencontainers.image.title="Magic Wormhole relay"
+LABEL org.opencontainers.image.description="Docker image to run the Magic Wormhole relay service"
+LABEL org.opencontainers.image.source="https://github.com/LeastAuthority/magic-wormhole-docker/relay"
+LABEL org.opencontainers.image.vendor="LeastAuthority TFA GmbH"

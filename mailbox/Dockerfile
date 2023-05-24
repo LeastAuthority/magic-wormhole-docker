@@ -22,3 +22,8 @@ COPY welcome.motd welcome.motd
 
 # --blur-usage=3600 Logging time rounded to 1 hour and turns off request-logging
 CMD twist wormhole-mailbox --channel-db=/db/relay.sqlite --usage-db=/db/usage-relay.sqlite --blur-usage=3600 --motd "$(cat welcome.motd)"
+
+LABEL org.opencontainers.image.title="Magic Wormhole mailbox"
+LABEL org.opencontainers.image.description="Docker image to run the Magic Wormhole mailbox service"
+LABEL org.opencontainers.image.source="https://github.com/LeastAuthority/magic-wormhole-docker/mailbox"
+LABEL org.opencontainers.image.vendor="LeastAuthority TFA GmbH"
