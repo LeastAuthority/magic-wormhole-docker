@@ -37,3 +37,28 @@ VOLUME /db
 
 # Expose ports
 EXPOSE "${MW_RELAY_PORT}/${MW_RELAY_PROTO}" "${MW_RELAY_WS_PORT}/${MW_RELAY_WS_PROTO}"
+
+# Parameters for default user:group
+ARG uid=1000
+ARG user=appuser
+ARG gid=1000
+ARG group=appgroup
+
+# Add group and user so the command above and its
+# output will be owned by the specified uid:gid
+# These steps will fail explicitely on conflict
+RUN getent group "${gid}" > /dev/null \
+    || groupadd -g "${gid}" "${group}"; \
+    test "$(getent group "${gid}")" = "$(getent group "${group}")" \
+    || { echo "Group name/id conflict!"; exit 1; }
+RUN id "${uid}" > /dev/null 2>&1 \
+    || useradd -md "/home/${user}" -s /bin/bash -g "${group}" -u "${uid}" "${user}"; \
+    test "$(id "${uid}")" = "$(id "${user}")" \
+    || { echo "User name/id conflict!"; exit 1; }
+
+# Prepare directories with ownership
+RUN { test -d /db || mkdir /db; } && chown -R ${user}:${group} /app /db
+
+# Switch to non-root user
+USER ${user}
+WORKDIR /app
