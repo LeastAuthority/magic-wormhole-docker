@@ -17,6 +17,28 @@ The 2 first images are currently used in the magic-wormhole backend operated by 
 * Winden https://winden.app/ (see https://github.com/LeastAuthority/winden)
 * Destiny (see https://github.com/LeastAuthority/destiny)
 
+== Integration test
+
+This repository provides Docker Composer files to build and test the images.
+The test is basic: send and receive "Hello world!" message through a local wormhole.
+
+[source]
+----
+# Build the back-end images
+docker compose -f docker-compose-back.yml build
+# Build the front-end images
+docker compose -f docker-compose-front.yml build
+# Start the back-end in the background
+docker compose -f docker-compose-back.yml up --detach
+# Start the front-end in the foreground
+docker compose -f docker-compose-front.yml up
+# Stop the back-end (or replay the previous step)
+docker compose -f docker-compose-back.yml down
+----
+
+REM: Use `docker-compose` for older version.
+
+
 == Basic instructions
 
 === Select which source versions to use for the build
