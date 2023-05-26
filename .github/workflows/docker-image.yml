@@ -9,7 +9,31 @@ on:
     branches: [ "main" ]
 
 jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install docker support
+        id: install_docker
+        run: |
+          sudo apt install --quiet docker-compose
+          docker run hello-world
+      - name: Build images
+        id: build_images
+        run: |
+          docker-compose -f docker-compose-back.yml build --progress=plain
+          docker-compose -f docker-compose-front.yml build --progress=plain
+      - name: Test images
+        id: test_images
+        run: |
+          docker-compose -f docker-compose-back.yml up --detach
+          docker-compose -f docker-compose-front.yml up
+          docker-compose -f docker-compose-back.yml down
   build:
+    name: Build
+    needs: test
     runs-on: ubuntu-latest
     strategy:
       matrix:
