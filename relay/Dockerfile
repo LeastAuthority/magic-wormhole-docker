@@ -10,34 +10,6 @@ LABEL org.opencontainers.image.description="Docker image to run the Magic Wormho
 LABEL org.opencontainers.image.source="https://github.com/LeastAuthority/magic-wormhole-docker/relay"
 LABEL org.opencontainers.image.vendor="LeastAuthority TFA GmbH"
 
-# Install the application
-COPY requirements.txt /app/
-
-RUN pip install \
-    --disable-pip-version-check \
-    --no-cache \
-    --upgrade \
-    -r /app/requirements.txt
-
-# Default parameters and command to start
-ENV MW_RELAY_BLUR_USAGE="3600"
-ENV MW_RELAY_PROTO="tcp"
-ENV MW_RELAY_PORT="4001"
-ENV MW_RELAY_WS_PROTO="tcp"
-ENV MW_RELAY_WS_PORT="4200"
-
-CMD twist transitrelay \
-    --usage-db="/db/usage-transitrelay.sqlite" \
-    --blur-usage="${MW_RELAY_BLUR_USAGE}" \
-    --port="${MW_RELAY_PROTO}:${MW_RELAY_PORT}" \
-    --websocket="${MW_RELAY_WS_PROTO}:${MW_RELAY_WS_PORT}"
-
-# Persistent data
-VOLUME /db
-
-# Expose ports
-EXPOSE "${MW_RELAY_PORT}/${MW_RELAY_PROTO}" "${MW_RELAY_WS_PORT}/${MW_RELAY_WS_PROTO}"
-
 # Parameters for default user:group
 ARG uid=1000
 ARG user=appuser
@@ -57,8 +29,42 @@ RUN id "${uid}" > /dev/null 2>&1 \
     || { echo "User name/id conflict!"; exit 1; }
 
 # Prepare directories with ownership
-RUN { test -d /db || mkdir /db; } && chown -R ${user}:${group} /app /db
+RUN { test -d /db || mkdir /db; } && chown -R ${user}:${group} /db
 
 # Switch to non-root user
 USER ${user}
 WORKDIR /app
+
+# Prepare user variables
+ENV USER=${user}
+ENV HOME=/home/${user}
+ENV PATH="${HOME}/.local/bin:${PATH}"
+ENV PYTHONPATH="."
+
+# Install the application
+COPY requirements.txt .
+
+RUN pip install \
+    --disable-pip-version-check \
+    --no-cache \
+    --upgrade \
+    -r requirements.txt
+
+# Default parameters and command to start
+ENV MW_RELAY_BLUR_USAGE="3600"
+ENV MW_RELAY_PROTO="tcp"
+ENV MW_RELAY_PORT="4001"
+ENV MW_RELAY_WS_PROTO="tcp"
+ENV MW_RELAY_WS_PORT="4200"
+
+CMD twist transitrelay \
+    --usage-db="/db/usage-transitrelay.sqlite" \
+    --blur-usage="${MW_RELAY_BLUR_USAGE}" \
+    --port="${MW_RELAY_PROTO}:${MW_RELAY_PORT}" \
+    --websocket="${MW_RELAY_WS_PROTO}:${MW_RELAY_WS_PORT}"
+
+# Persistent data
+VOLUME /db
+
+# Expose ports
+EXPOSE "${MW_RELAY_PORT}/${MW_RELAY_PROTO}" "${MW_RELAY_WS_PORT}/${MW_RELAY_WS_PROTO}"

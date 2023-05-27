@@ -10,14 +10,45 @@ LABEL org.opencontainers.image.description="Docker image to run the Magic Wormho
 LABEL org.opencontainers.image.source="https://github.com/LeastAuthority/magic-wormhole-docker/mailbox"
 LABEL org.opencontainers.image.vendor="LeastAuthority TFA GmbH"
 
+# Parameters for default user:group
+ARG uid=1000
+ARG user=appuser
+ARG gid=1000
+ARG group=appgroup
+
+# Add group and user so the command above and its
+# output will be owned by the specified uid:gid
+# These steps will fail explicitely on conflict
+RUN getent group "${gid}" > /dev/null \
+    || groupadd -g "${gid}" "${group}"; \
+    test "$(getent group "${gid}")" = "$(getent group "${group}")" \
+    || { echo "Group name/id conflict!"; exit 1; }
+RUN id "${uid}" > /dev/null 2>&1 \
+    || useradd -md "/home/${user}" -s /bin/bash -g "${group}" -u "${uid}" "${user}"; \
+    test "$(id "${uid}")" = "$(id "${user}")" \
+    || { echo "User name/id conflict!"; exit 1; }
+
+# Prepare directories with ownership
+RUN { test -d /db || mkdir /db; } && chown -R ${user}:${group} /db
+
+# Switch to non-root user
+USER ${user}
+WORKDIR /app
+
+# Prepare user variables
+ENV USER=${user}
+ENV HOME=/home/${user}
+ENV PATH="${HOME}/.local/bin:${PATH}"
+ENV PYTHONPATH="."
+
 # Install the application
-COPY requirements.txt /app/
+COPY requirements.txt .
 
 RUN pip install \
     --disable-pip-version-check \
     --no-cache \
     --upgrade \
-    -r /app/requirements.txt
+    -r requirements.txt
 
 # Copy welcome message as file to load with newlines symbols in parameters
 # FIXME: This motd should not be shipped in this image (configured downstream)
@@ -40,28 +71,3 @@ VOLUME /db
 
 # Expose port
 EXPOSE "${MW_MAILBOX_PORT}/${MW_MAILBOX_PROTO}"
-
-# Parameters for default user:group
-ARG uid=1000
-ARG user=appuser
-ARG gid=1000
-ARG group=appgroup
-
-# Add group and user so the command above and its
-# output will be owned by the specified uid:gid
-# These steps will fail explicitely on conflict
-RUN getent group "${gid}" > /dev/null \
-    || groupadd -g "${gid}" "${group}"; \
-    test "$(getent group "${gid}")" = "$(getent group "${group}")" \
-    || { echo "Group name/id conflict!"; exit 1; }
-RUN id "${uid}" > /dev/null 2>&1 \
-    || useradd -md "/home/${user}" -s /bin/bash -g "${group}" -u "${uid}" "${user}"; \
-    test "$(id "${uid}")" = "$(id "${user}")" \
-    || { echo "User name/id conflict!"; exit 1; }
-
-# Prepare directories with ownership
-RUN { test -d /db || mkdir /db; } && chown -R ${user}:${group} /app /db
-
-# Switch to non-root user
-USER ${user}
-WORKDIR /app
