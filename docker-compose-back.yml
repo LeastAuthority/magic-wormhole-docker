@@ -8,6 +8,8 @@ services:
       - MW_MAILBOX_PORT=${MW_MAILBOX_PORT:-4000}
     volumes:
       - "./mailbox_database:/db"
+    ports:
+      - ${MW_MAILBOX_PORT:-4000}:${MW_MAILBOX_PORT:-4000}
   relay:
     image: leastauthority/magic-wormhole-relay
     build:
@@ -17,3 +19,6 @@ services:
       - MW_RELAY_WS_PORT=${MW_RELAY_WS_PORT:-4200}
     volumes:
       - "./relay_database:/db"
+    ports:
+      - ${MW_RELAY_PORT:-4001}:${MW_RELAY_PORT:-4001}
+      - ${MW_RELAY_WS_PORT:-4200}:${MW_RELAY_WS_PORT:-4200}
