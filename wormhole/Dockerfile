@@ -1,9 +1,6 @@
 # Pull official base image from DockerHub
 FROM python:3.9.16-slim-bullseye
 
-RUN apt-get update && apt-get install -y \
-    && rm -rf /var/lib/apt/lists/*
-
 # Metadata
 LABEL org.opencontainers.image.title="Magic Wormhole CLI"
 LABEL org.opencontainers.image.description="Docker image to run the Magic Wormhole implementation and CLI"
