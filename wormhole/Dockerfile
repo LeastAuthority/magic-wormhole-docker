@@ -7,6 +7,15 @@ LABEL org.opencontainers.image.description="Docker image to run the Magic Wormho
 LABEL org.opencontainers.image.source="https://github.com/LeastAuthority/magic-wormhole-docker/wormhole"
 LABEL org.opencontainers.image.vendor="LeastAuthority TFA GmbH"
 
+# Install the application
+COPY requirements.txt .
+
+RUN pip install \
+    --disable-pip-version-check \
+    --no-cache \
+    --upgrade \
+    -r requirements.txt
+
 # Parameters for default user:group
 ARG uid=1000
 ARG user=appuser
@@ -28,21 +37,6 @@ RUN id "${uid}" > /dev/null 2>&1 \
 # Switch to non-root user
 USER ${user}
 WORKDIR /app
-
-# Prepare user variables
-ENV USER=${user}
-ENV HOME=/home/${user}
-ENV PATH="${HOME}/.local/bin:${PATH}"
-ENV PYTHONPATH="."
-
-# Install the application
-COPY requirements.txt .
-
-RUN pip install \
-    --disable-pip-version-check \
-    --no-cache \
-    --upgrade \
-    -r requirements.txt
 
 # Default command to start the application
 CMD wormhole
