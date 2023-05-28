@@ -47,6 +47,7 @@ jobs:
           # Start the back-end with the current user ID
           echo "MW_MAILBOX_UID=$(id -u)" >> .env
           echo "MW_RELAY_UID=$(id -u)" >> .env
+          mkdir mailbox_database relay_database
           docker-compose -f docker-compose-back.yml up --detach
           # Wait for the services
           for try in {1..3}; do
