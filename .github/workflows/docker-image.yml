@@ -9,7 +9,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  whynot:
+  build:
     name: Build
     runs-on: ubuntu-latest
     steps:
@@ -59,40 +59,40 @@ jobs:
           docker-compose -f docker-compose-back.yml ps
           docker-compose -f docker-compose-front.yml up --abort-on-container-exit
           docker-compose -f docker-compose-back.yml down
-    - name: Determine target tag
-      id: target
-      run: |
-        echo "github.ref: ${{ github.ref }}"
-        echo "github.ref_type: ${{ github.ref_type }}"
-        if [ ${{ github.ref_type }} == 'branch' ]; then
-        echo "target_tag=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-        else
-        echo "target_tag=$(git describe --tags --always)" >> $GITHUB_ENV
-        fi
-        cat $GITHUB_ENV
-    - name: Tag images
-      id: tag_images
-      run: |
-        for image in magic-wormhole-mailbox magic-wormhole-relay magic-wormhole; do
-          docker tag leastauthority/${image}:latest leastauthority/${image}:${{ env.target_tag }}
-        done
-    - name: List images
-      run: docker images
-    - name: Login to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-      if: github.ref == 'refs/heads/main' || github.ref_type == 'tag'
-    - name: Push to docker hub
-      run: |
-        for image in magic-wormhole-mailbox magic-wormhole-relay magic-wormhole; do
-          docker push leastauthority/${image}:${{ env.target_tag }}
-        done
-      if: github.ref == 'refs/heads/main' || github.ref_type == 'tag'
-    - name: Push to docker hub latest
-      run: |
-        for image in magic-wormhole-mailbox magic-wormhole-relay magic-wormhole; do
-          docker push leastauthority/${image}:latest
-        done
-      if: github.ref == 'refs/heads/main' || github.ref_type == 'tag'
+      - name: Determine target tag
+        id: target
+        run: |
+          echo "github.ref: ${{ github.ref }}"
+          echo "github.ref_type: ${{ github.ref_type }}"
+          if [ ${{ github.ref_type }} == 'branch' ]; then
+          echo "target_tag=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          else
+          echo "target_tag=$(git describe --tags --always)" >> $GITHUB_ENV
+          fi
+          cat $GITHUB_ENV
+      - name: Tag images
+        id: tag_images
+        run: |
+          for image in magic-wormhole-mailbox magic-wormhole-relay magic-wormhole; do
+            docker tag leastauthority/${image}:latest leastauthority/${image}:${{ env.target_tag }}
+          done
+      - name: List images
+        run: docker images
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+        if: github.ref == 'refs/heads/main' || github.ref_type == 'tag'
+      - name: Push to docker hub
+        run: |
+          for image in magic-wormhole-mailbox magic-wormhole-relay magic-wormhole; do
+            docker push leastauthority/${image}:${{ env.target_tag }}
+          done
+        if: github.ref == 'refs/heads/main' || github.ref_type == 'tag'
+      - name: Push to docker hub latest
+        run: |
+          for image in magic-wormhole-mailbox magic-wormhole-relay magic-wormhole; do
+            docker push leastauthority/${image}:latest
+          done
+        if: github.ref == 'refs/heads/main' || github.ref_type == 'tag'
