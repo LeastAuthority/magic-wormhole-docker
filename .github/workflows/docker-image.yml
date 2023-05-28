@@ -9,8 +9,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  test:
-    name: Test
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -59,21 +59,6 @@ jobs:
           docker-compose -f docker-compose-back.yml ps
           docker-compose -f docker-compose-front.yml up --abort-on-container-exit
           docker-compose -f docker-compose-back.yml down
-  build:
-    name: Build
-    needs: test
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        target:
-          - directory: mailbox
-            image: leastauthority/magic-wormhole-mailbox
-          - directory: relay
-            image: leastauthority/magic-wormhole-relay
-          - directory: wormhole
-            image: leastauthority/magic-wormhole
-    steps:
-    - uses: actions/checkout@v3
     - name: Determine target tag
       id: target
       run: |
@@ -85,9 +70,12 @@ jobs:
         echo "target_tag=$(git describe --tags --always)" >> $GITHUB_ENV
         fi
         cat $GITHUB_ENV
-    - name: Build the Docker image
-      working-directory: ./${{ matrix.target.directory }}
-      run: docker build . --file Dockerfile --tag ${{ matrix.target.image }}:${{ env.target_tag }}
+    - name: Tag images
+      id: tag_images
+      run: |
+        for image in magic-wormhole-mailbox magic-wormhole-relay magic-wormhole; do
+          docker tag leastauthority/${image}:latest leastauthority/${image}:${{ env.target_tag }}
+        done
     - name: List images
       run: docker images
     - name: Login to Docker Hub
@@ -97,10 +85,14 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
       if: github.ref == 'refs/heads/main' || github.ref_type == 'tag'
     - name: Push to docker hub
-      run: docker push ${{ matrix.target.image }}:${{ env.target_tag }}
+      run: |
+        for image in magic-wormhole-mailbox magic-wormhole-relay magic-wormhole; do
+          docker push ${image}:${{ env.target_tag }}
+        done
       if: github.ref == 'refs/heads/main' || github.ref_type == 'tag'
     - name: Push to docker hub latest
       run: |
-        docker tag ${{ matrix.target.image }}:${{ env.target_tag }} ${{ matrix.target.image }}:latest
-        docker push ${{ matrix.target.image }}:latest
+        for image in magic-wormhole-mailbox magic-wormhole-relay magic-wormhole; do
+          docker push ${image}:latest
+        done
       if: github.ref == 'refs/heads/main' || github.ref_type == 'tag'
