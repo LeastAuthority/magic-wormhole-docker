@@ -87,12 +87,12 @@ jobs:
     - name: Push to docker hub
       run: |
         for image in magic-wormhole-mailbox magic-wormhole-relay magic-wormhole; do
-          docker push ${image}:${{ env.target_tag }}
+          docker push leastauthority/${image}:${{ env.target_tag }}
         done
       if: github.ref == 'refs/heads/main' || github.ref_type == 'tag'
     - name: Push to docker hub latest
       run: |
         for image in magic-wormhole-mailbox magic-wormhole-relay magic-wormhole; do
-          docker push ${image}:latest
+          docker push leastauthority/${image}:latest
         done
       if: github.ref == 'refs/heads/main' || github.ref_type == 'tag'
