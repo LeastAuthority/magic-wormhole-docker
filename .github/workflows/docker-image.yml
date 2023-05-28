@@ -60,7 +60,6 @@ jobs:
           docker-compose -f docker-compose-front.yml up --abort-on-container-exit || \
           { docker-compose -f docker-compose-back.yml logs;
             RET=1; }
-          docker-compose -f docker-compose-front.yml down
           docker-compose -f docker-compose-back.yml down
           exit ${RET:-0}
       - name: Determine target tag
