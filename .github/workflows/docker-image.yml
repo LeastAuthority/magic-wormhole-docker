@@ -32,9 +32,8 @@ jobs:
       - name: Build images
         id: build_images
         run: |
-          # Only if not kust restored from the cache
-          repository=${{ github.repository }}
-          if [ $(docker images --quiet ${repository##*/}_magic-wormhole*:latest | wc -l) -lt 3 ]; then
+          # Only if not just restored from the cache
+          if [ $(docker images --quiet leastauthority/magic-wormhole*:latest | wc -l) -lt 3 ]; then
             docker-compose -f docker-compose-back.yml build --progress=plain
             docker-compose -f docker-compose-front.yml build --progress=plain
           fi
