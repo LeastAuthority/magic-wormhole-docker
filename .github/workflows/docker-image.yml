@@ -35,14 +35,16 @@ jobs:
           docker-compose -f docker-compose-back.yml up --detach
           # Wait for the server
           for try in {1..3}; do
-            nc -w 3 127.0.0.1 ${MW_MAILBOX_PORT} > /dev/null 2>&1 && break || { sleep 1; }
-            nc -w 3 127.0.0.1 ${MW_RELAY_PORT} > /dev/null 2>&1 && break || { sleep 1; }
-            nc -w 3 127.0.0.1 ${MW_RELAY_WS_PORT} > /dev/null 2>&1 && break || { sleep 1; }
+            { nc -w 3 127.0.0.1 ${MW_MAILBOX_PORT} > /dev/null 2>&1 && \
+              nc -w 3 127.0.0.1 ${MW_RELAY_PORT} > /dev/null 2>&1 && \
+              nc -w 3 127.0.0.1 ${MW_RELAY_WS_PORT} > /dev/null 2>&1; \
+            } && break || { sleep 1; }
             if [ $try = 3 ]; then
               echo ":x: Back-end services failed to start" >> $GITHUB_STEP_SUMMARY;
               exit 1
             fi
           done
+          docker-compose -f docker-compose-back.yml ps
           docker-compose -f docker-compose-front.yml up --abort-on-container-exit
           docker-compose -f docker-compose-back.yml down
   build:
