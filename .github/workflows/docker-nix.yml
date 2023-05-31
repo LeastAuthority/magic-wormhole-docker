@@ -1,0 +1,67 @@
+---
+name: NixOS Images
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/docker-nix.yml'
+      - 'nixpkgs.json'
+      - '*.nix'
+      - '*/*.nix'
+      - 'nix/**'
+  pull_request:
+    branches:    
+      - main
+    paths:
+      - '.github/workflows/docker-nix.yml'
+      - 'nixpkgs.json'
+      - '*.nix'
+      - '*/*.nix'
+      - 'nix/**'
+
+jobs:
+  build:
+    name: Build images
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          - directory: mailbox
+            image: leastauthority/magic-wormhole-mailbox
+          - directory: relay
+            image: leastauthority/magic-wormhole-relay
+          - directory: wormhole
+            image: leastauthority/magic-wormhole
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Install Nix
+      uses: cachix/install-nix-action@v20
+      with:
+        nix_path: nixpkgs=channel:nixos-22.11
+
+    - name: Build image with Nix
+      run: |
+        docker load --input $(nix-build ${{ matrix.target.directory }})
+
+    - name: Get image tag
+      run: echo "tag=$(docker images "${{ matrix.target.image }}" --format "{{.Tag}}")" >> $GITHUB_ENV
+
+    - name: Extract Python requirements
+      run: |
+        docker run --rm -t \
+        --entrypoint python \
+        -v $(pwd)/nix/helpers:/helpers \
+        ${{ matrix.target.image }}:${{ env.tag }} /helpers/requirements-from-nix.py \
+        | grep -vE '==[0-9]+(\.[0-9]+){0,2}-dev' \
+        > requirements.txt
+        # The grep above avoids dupplicated requirements from dev!?
+
+    - name: Scan Python requirements
+      uses: pypa/gh-action-pip-audit@v1.0.0
+      with:
+        inputs: requirements.txt
+      continue-on-error: true # TODO: comment on PR and run weekly
