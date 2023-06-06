@@ -1,0 +1,12 @@
+version: "3.3"
+services:
+  sender:
+    image: leastauthority/magic-wormhole
+    build:
+      context: ./wormhole
+    command: wormhole --relay-url="ws://mailbox:${MW_MAILBOX_PORT:-4000}/v1" --transit-helper="tcp://relay:${MW_RELAY_PORT:-4001}" send --hide-progress --code 1-special-code --text "Hello world!"
+  receiver:
+    image: leastauthority/magic-wormhole
+    build:
+      context: ./wormhole
+    command: wormhole --relay-url="ws://mailbox:${MW_MAILBOX_PORT:-4000}/v1" --transit-helper="tcp://relay:${MW_RELAY_PORT:-4001}" receive --hide-progress --only-text 1-special-code
