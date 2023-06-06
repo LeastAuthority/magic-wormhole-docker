@@ -5,10 +5,10 @@ FROM python:3.9.16-slim-bullseye
 LABEL org.opencontainers.image.title="Magic Wormhole CLI"
 LABEL org.opencontainers.image.description="Docker image to run the Magic Wormhole implementation and CLI"
 LABEL org.opencontainers.image.source="https://github.com/LeastAuthority/magic-wormhole-docker/wormhole"
-LABEL org.opencontainers.image.vendor="LeastAuthority TFA GmbH"
+LABEL org.opencontainers.image.vendor="Least Authority TFA GmbH"
 
 # Install the application
-COPY requirements.txt .
+COPY requirements.txt /app/
 
 RUN pip install \
     --disable-pip-version-check \

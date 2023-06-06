@@ -8,10 +8,10 @@ RUN apt-get update && apt-get install -y \
 LABEL org.opencontainers.image.title="Magic Wormhole mailbox"
 LABEL org.opencontainers.image.description="Docker image to run the Magic Wormhole mailbox service"
 LABEL org.opencontainers.image.source="https://github.com/LeastAuthority/magic-wormhole-docker/mailbox"
-LABEL org.opencontainers.image.vendor="LeastAuthority TFA GmbH"
+LABEL org.opencontainers.image.vendor="Least Authority TFA GmbH"
 
 # Install the application
-COPY requirements.txt .
+COPY requirements.txt /app/
 
 RUN pip install \
     --disable-pip-version-check \
