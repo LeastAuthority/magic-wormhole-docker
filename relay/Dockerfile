@@ -17,7 +17,7 @@ RUN pip install \
     --disable-pip-version-check \
     --no-cache \
     --upgrade \
-    -r requirements.txt
+    -r /app/requirements.txt
 
 # Parameters for default user:group
 ARG uid=1000
