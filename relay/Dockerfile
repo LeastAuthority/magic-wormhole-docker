@@ -1,4 +1,4 @@
-FROM pypy:3.9-7.3.11-slim-bullseye
+FROM pypy:3.9-7.3.16-slim-bullseye
 
 RUN apt-get update && apt-get install -y \
     rustc \
