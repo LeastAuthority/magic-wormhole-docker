@@ -11,17 +11,17 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install docker support
         id: install_docker
         run: |
           sudo apt install --quiet docker-compose
           docker run hello-world
       - name: Cache images
-        uses: ScribeMD/docker-cache@0.3.3
+        uses: AndreKurait/docker-cache@0.6.0
         with:
           key: |
             docker-${{ runner.os }}-${{ hashFiles(
@@ -88,7 +88,7 @@ jobs:
         run: |
           docker images leastauthority/magic-wormhole*:*
       - name: Login to Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
