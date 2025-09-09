@@ -8,8 +8,6 @@ updates:
     schedule:
       interval: "daily"
       time: "12:00"
-    reviewers:
-      - "LeastAuthority/magic-wormhole"
   - package-ecosystem: "docker"
     directory: "/relay"
     ignore:
@@ -18,8 +16,6 @@ updates:
     schedule:
       interval: "daily"
       time: "12:00"
-    reviewers:
-      - "LeastAuthority/magic-wormhole"
   - package-ecosystem: "docker"
     directory: "/wormhole"
     ignore:
@@ -28,5 +24,3 @@ updates:
     schedule:
       interval: "daily"
       time: "12:00"
-    reviewers:
-      - "LeastAuthority/magic-wormhole"

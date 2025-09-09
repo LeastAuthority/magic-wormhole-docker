@@ -1,0 +1,3 @@
+/mailbox/Dockerfile @LeastAuthority/magic-wormhole"
+/relay/Dockerfile @LeastAuthority/magic-wormhole"
+/wormhole/Dockerfiles @LeastAuthority/magic-wormhole"
