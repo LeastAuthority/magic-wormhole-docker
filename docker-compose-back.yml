@@ -17,10 +17,10 @@ services:
       context: ./relay
     environment:
       - MW_RELAY_PORT=${MW_RELAY_PORT:-4001}
-      - MW_RELAY_WS_PORT=${MW_RELAY_WS_PORT:-4200}
+      - MW_RELAY_WS_PORT=${MW_RELAY_WS_PORT:-4002}
     user: ${MW_RELAY_UID:-1000}
     volumes:
       - "./relay_database:/db"
     ports:
       - ${MW_RELAY_PORT:-4001}:${MW_RELAY_PORT:-4001}
-      - ${MW_RELAY_WS_PORT:-4200}:${MW_RELAY_WS_PORT:-4200}
+      - ${MW_RELAY_WS_PORT:-4002}:${MW_RELAY_WS_PORT:-4002}
