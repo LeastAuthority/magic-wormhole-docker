@@ -54,7 +54,7 @@ jobs:
         env:
           MW_MAILBOX_PORT: 4000
           MW_RELAY_PORT: 4001
-          MW_RELAY_WS_PORT: 4200
+          MW_RELAY_WS_PORT: 4002
         run: |
           # Start the back-end with the current user ID
           echo "MW_MAILBOX_UID=$(id -u)" >> .env
