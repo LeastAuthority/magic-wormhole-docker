@@ -1,5 +1,18 @@
 version: 2
 updates:
+  - package-ecosystem: "pip"
+    directory: "/helpers"
+    schedule:
+      interval: "daily"
+      time: "12:00"
+  - package-ecosystem: "docker"
+    directory: "/helpers"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    schedule:
+      interval: "daily"
+      time: "12:00"
   - package-ecosystem: "docker"
     directory: "/mailbox"
     ignore:
