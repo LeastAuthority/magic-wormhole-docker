@@ -49,7 +49,7 @@ ENV MW_RELAY_BLUR_USAGE="3600"
 ENV MW_RELAY_PROTO="tcp"
 ENV MW_RELAY_PORT="4001"
 ENV MW_RELAY_WS_PROTO="tcp"
-ENV MW_RELAY_WS_PORT="4200"
+ENV MW_RELAY_WS_PORT="4002"
 
 CMD twist transitrelay \
     --usage-db="/db/usage-transitrelay.sqlite" \
