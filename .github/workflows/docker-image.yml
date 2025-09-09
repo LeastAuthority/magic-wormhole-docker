@@ -5,8 +5,20 @@ on:
   push:
     branches: [ "main" ]
     tags: [ "*" ]
+    paths:
+      - '.github/workflows/*.yml'
+      - 'mailbox/**'
+      - 'relay/**'
+      - 'wormhole/**'
+      - 'docker-compose-*.yml'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - '.github/workflows/*.yml'
+      - 'mailbox/**'
+      - 'relay/**'
+      - 'wormhole/**'
+      - 'docker-compose-*.yml'
 
 jobs:
   build:
