@@ -1,0 +1,11 @@
+version: "3.3"
+services:
+  helpers:
+    image: leastauthority/helpers
+    build:
+      context: ./helpers
+    volumes:
+      - "./helpers:/app/helpers"
+      - "./mailbox:/app/mailbox"
+      - "./relay:/app/relay"
+      - "./wormhole:/app/wormhole"

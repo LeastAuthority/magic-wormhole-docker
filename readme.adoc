@@ -57,12 +57,24 @@ or just give the desired released version:
 magic-wormhole==0.12.0
 ----
 
-Install `pip-tools` and run
+Build the `helpers` image and run it to enter a shell providing `pip-compile`:
 
 [source]
 ----
-pip-compile --generate-hashes requirements.in
+docker compose -f docker-compose-helpers.yml build helpers
+docker compose -f docker-compose-helpers.yml run --rm helpers
 ----
+
+Update the requirements of each components:
+
+[source]
+----
+pip-compile --generate-hashes --strip-extras --allow-unsafe --upgrade ./mailbox/requirements.in > ./mailbox/requirements.txt
+pip-compile --generate-hashes --strip-extras --allow-unsafe --upgrade ./relay/requirements.in > ./relay/requirements.txt
+pip-compile --generate-hashes --strip-extras --allow-unsafe --upgrade ./wormhole/requirements.in > ./wormhole/requirements.txt
+----
+
+Verify the new requirements with the xref:#_integration_test[integration test] and commit them when ready.
 
 === Docker tags used for build results
 In order to have an exact reference to the desired version we use

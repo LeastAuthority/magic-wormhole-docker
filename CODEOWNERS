@@ -1,3 +1,5 @@
-/mailbox/Dockerfile @LeastAuthority/magic-wormhole"
-/relay/Dockerfile @LeastAuthority/magic-wormhole"
-/wormhole/Dockerfiles @LeastAuthority/magic-wormhole"
+/helper/requirements.txt @LeastAuthority/magic-wormhole
+/helpers/Dockerfile @LeastAuthority/magic-wormhole
+/mailbox/Dockerfile @LeastAuthority/magic-wormhole
+/relay/Dockerfile @LeastAuthority/magic-wormhole
+/wormhole/Dockerfiles @LeastAuthority/magic-wormhole
