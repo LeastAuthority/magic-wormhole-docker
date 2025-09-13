@@ -1,4 +1,4 @@
-FROM pypy:3.10-7.3.19-slim-bookworm@sha256:5d18aa0232059c991ff8d52f1b528a6ff8f55c86154ba248a270a6eb90975f3a
+FROM pypy:3.11-7.3.20-slim-bookworm@sha256:fd76413ca5f0be342bda275fb80e7f626c9c7398a3643ac64455abe790e5c0bc
 
 RUN apt-get update && apt-get install -y \
     rustc \
