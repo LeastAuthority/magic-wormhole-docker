@@ -1,3 +1,4 @@
+/.github/workflows/*.yml @LeastAuthority/it-ops
 /helper/requirements.txt @LeastAuthority/magic-wormhole
 /helpers/Dockerfile @LeastAuthority/magic-wormhole
 /mailbox/Dockerfile @LeastAuthority/magic-wormhole
