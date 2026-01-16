@@ -190,10 +190,10 @@ iterable-io==1.0.0 \
     # via magic-wormhole
 magic-wormhole @ https://github.com/magic-wormhole/magic-wormhole/tarball/efa8a0bf26bc84abd68e3f9edb168847ff0b4762 \
     --hash=sha256:4c3580129242bc19b5f5cd60700a6e0d6a0de3f8c3bb55194b448d3e892879af
-    # via -r wormhole/requirements.in
-pyasn1==0.6.1 \
-    --hash=sha256:0d632f46f2ba09143da3a8afe9e33fb6f92fa2320ab7e886e2d0f7672af84629 \
-    --hash=sha256:6f580d2bdd84365380830acf45550f2511469f673cb4a5ae3857a3170128b034
+    # via -r requirements.in
+pyasn1==0.6.2 \
+    --hash=sha256:1eb26d860996a18e9b6ed05e7aae0e9fc21619fcee6af91cca9bad4fbea224bf \
+    --hash=sha256:9b59a2b25ba7e4f8197db7686c09fb33e658b98339fadb826e9512629017833b
     # via
     #   pyasn1-modules
     #   service-identity
