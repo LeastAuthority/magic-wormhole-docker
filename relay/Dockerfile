@@ -1,6 +1,8 @@
-FROM pypy:3.10-7.3.19-slim-bookworm@sha256:5d18aa0232059c991ff8d52f1b528a6ff8f55c86154ba248a270a6eb90975f3a
+FROM pypy:3.11-8.0.1-slim-trixie@sha256:a9bf9b6e3e4c5ce5cfb49289a2ed4f8099dbf6dc2f0b59edd8874cdd3980d25a
 
 RUN apt-get update && apt-get install -y \
+    libssl-dev \
+    pkg-config \
     rustc \
     && rm -rf /var/lib/apt/lists/*
 

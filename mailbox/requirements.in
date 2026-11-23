@@ -1,1 +1,3 @@
-magic-wormhole-mailbox-server @ https://github.com/magic-wormhole/magic-wormhole-mailbox-server/tarball/ec38b9cf76a2c70635292001f1f885a65f9233fc#egg=magic-wormhole-mailbox-server
+magic-wormhole-mailbox-server @ https://github.com/magic-wormhole/magic-wormhole-mailbox-server/tarball/b24687cb99b1d903cd60388e29dfbc41904d1395#egg=magic-wormhole-mailbox-server
+cbor2==5.9.0
+u-msgpack-python>=2.1
