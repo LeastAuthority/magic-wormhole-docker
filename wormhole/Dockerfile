@@ -1,5 +1,5 @@
 # Pull official base image from DockerHub
-FROM python:3.10.18-slim-bookworm@sha256:e7eed6c2e7fd1ecc43f0a37da7a115f4c9c9f50f247e9cba086c2f4583412fd9
+FROM python:3.11.18-slim-trixie@sha256:61e01f72680f86a5279ad510818ab7b2ee9f049822589d4e34e33e044360356c
 
 # Metadata
 LABEL org.opencontainers.image.title="Magic Wormhole CLI"

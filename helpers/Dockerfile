@@ -1,5 +1,5 @@
 # Pull official base image from DockerHub
-FROM python:3.10.19-slim-bookworm@sha256:cda0e2fa3894f9ada2c652534e6de6b2fe65687c63208a77e9e8d88231547902
+FROM python:3.11.18-slim-trixie@sha256:61e01f72680f86a5279ad510818ab7b2ee9f049822589d4e34e33e044360356c
 
 # Install the application
 COPY requirements.txt /app/

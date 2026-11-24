@@ -1,1 +1,3 @@
-magic-wormhole-transit-relay @ https://github.com/magic-wormhole/magic-wormhole-transit-relay/tarball/3d83228da55c1ed2d628c1d40ce0b5d17c1bb646#egg=magic-wormhole-transit-relay
+magic-wormhole-transit-relay @ https://github.com/magic-wormhole/magic-wormhole-transit-relay/tarball/6d50be62c118df74d8f0a042662fbc407dfd5849#egg=magic-wormhole-transit-relay
+cbor2==5.9.0
+u-msgpack-python>=2.1
